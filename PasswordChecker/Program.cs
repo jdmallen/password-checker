@@ -21,7 +21,7 @@ namespace PasswordChecker
                                                                                  ");
 			Console.ForegroundColor = ConsoleColor.DarkGray;
 			Console.WriteLine("Jesse Mallen, 2018");
-			Console.WriteLine("Using HIBP's Password API");
+			Console.WriteLine("Checks if a password is part of a known breach.");
 			Console.WriteLine(
 				"https://haveibeenpwned.com/API/v2#PwnedPasswords");
 			Console.ForegroundColor = ConsoleColor.White;
@@ -34,11 +34,7 @@ namespace PasswordChecker
 					Environment.NewLine + "Check another? (y/n): ");
 				var key = Console.ReadKey(true);
 				Console.WriteLine();
-				if (key.KeyChar == 'y' || key.KeyChar == 'Y')
-				{
-					await CheckPassword();
-				}
-				else
+				if (key.KeyChar != 'y' && key.KeyChar != 'Y')
 				{
 					break;
 				}
@@ -54,7 +50,6 @@ namespace PasswordChecker
 			do
 			{
 				var key = Console.ReadKey(true);
-				// Backspace Should Not Work
 				if (key.Key != ConsoleKey.Backspace
 				    && key.Key != ConsoleKey.Enter)
 				{
@@ -114,7 +109,9 @@ namespace PasswordChecker
 			results.TryGetValue(hashed, out var countString);
 			int.TryParse(countString, out var count);
 
-			Console.WriteLine($"Password appears in breaches {count} times.");
+			Console.WriteLine(
+				"Password appears in breaches "
+				+ $"{count} {(count == 1 ? "time" : "times")}.");
 		}
 
 //		private static void SampleConsoleColors()
